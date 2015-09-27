@@ -1,0 +1,2 @@
+// +build windows
+package keytar
