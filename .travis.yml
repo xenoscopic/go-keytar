@@ -30,7 +30,7 @@ addons:
 # keychain, but I don't see how that's possible with Travis CI.  For now, we can
 # at least check that things compile correctly.
 script:
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then go test; else go build fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then go test; else go build; fi
 
 # Send notifications
 notifications:
