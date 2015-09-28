@@ -18,8 +18,8 @@ package keytar
 // Generates an attribute structure for creating/searching based on the account
 // and service
 GnomeKeyringAttributeList * createAttributes(
-	const char *service,
-	const char *account
+	const char * service,
+	const char * account
 ) {
 	// Allocate the list
 	GnomeKeyringAttributeList * result = gnome_keyring_attribute_list_new();
@@ -40,10 +40,10 @@ void freeAttributes(GnomeKeyringAttributeList * list) {
 // Adds a password to the default keychain.  All arguments must be UTF-8 encoded
 // and null-terminated.
 int addPassword(
-	const char *displayName,
-	const char *service,
-	const char *account,
-	const char *password
+	const char * displayName,
+	const char * service,
+	const char * account,
+	const char * password
 ) {
 	// Create the item attributes
 	GnomeKeyringAttributeList * attributes = createAttributes(
@@ -78,7 +78,7 @@ int addPassword(
 // Gets a password from the default keychain.  All arguments must be UTF-8
 // encoded and null-terminated.  On success, the password argument will be set
 // to a null-terminated string that must be released with free.
-int getPassword(const char *service, const char *account, char **password) {
+int getPassword(const char * service, const char * account, char ** password) {
 	// Create the item attributes
 	GnomeKeyringAttributeList * attributes = createAttributes(
 		service,
@@ -86,7 +86,7 @@ int getPassword(const char *service, const char *account, char **password) {
 	);
 
 	// Find the item
-	GList *matches = NULL;
+	GList * matches = NULL;
 	GnomeKeyringResult result = gnome_keyring_find_items_sync(
 		GNOME_KEYRING_ITEM_GENERIC_SECRET,
 		attributes,
@@ -104,7 +104,7 @@ int getPassword(const char *service, const char *account, char **password) {
 	}
 
 	// Grab the first result and extract the password
-	const char *secret = ((GnomeKeyringFound *)(matches->data))->secret;
+	const char * secret = ((GnomeKeyringFound *)(matches->data))->secret;
 	*password = malloc(strlen(secret) + 1);
 	strcpy(*password, secret);
 
@@ -117,7 +117,7 @@ int getPassword(const char *service, const char *account, char **password) {
 
 // Deletes a password from the default keychain.  All arguments must be UTF-8
 // encoded and null-terminated.
-int deletePassword(const char *service, const char *account) {
+int deletePassword(const char * service, const char * account) {
 	// Create the item attributes
 	GnomeKeyringAttributeList * attributes = createAttributes(
 		service,
@@ -125,7 +125,7 @@ int deletePassword(const char *service, const char *account) {
 	);
 
 	// Find the item
-	GList *matches = NULL;
+	GList * matches = NULL;
 	GnomeKeyringResult result = gnome_keyring_find_items_sync(
 		GNOME_KEYRING_ITEM_GENERIC_SECRET,
 		attributes,
