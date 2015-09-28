@@ -10,13 +10,10 @@ package keytar
 #include <glib.h>
 #include <gnome-keyring.h>
 
-// Ensures that the application name is set, otherwise GNOME will print a bunch
-// of annoying messages to stdout
-void ensureApplicationNameSet() {
-	if (g_get_application_name() == NULL) {
-		g_set_application_name("keytar");
-	}
-}
+// TODO: Eventually it'd be nice to switch to GNOME's simple password storage,
+// but manually manipulating items allows us to work with older versions of
+// GNOME.  The better option would be to simply switch to another library,
+// because gnome-keyring is deprecated and unreliable.
 
 // Generates an attribute structure for creating/searching based on the account
 // and service
@@ -274,9 +271,6 @@ func (k KeychainLinux) DeletePassword(service, account string) error {
 
 // Keychain factory
 func NewKeychain() (Keychain, error) {
-	// Make sure the application name is set
-	C.ensureApplicationNameSet()
-
 	// Make sure keychain services are available
 	if C.gnome_keyring_is_available() == C.FALSE {
 		return nil, ErrUnsupported
