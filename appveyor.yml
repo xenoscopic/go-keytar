@@ -1,0 +1,24 @@
+# Versioning
+version: 1.0.0.{build}
+
+# Configuration
+environment:
+  matrix:
+    - GOPATH: C:\go-x86
+    - GOPATH: C:\go-x64
+
+# Set up clone path
+clone_folder: %GOPATH%\src\github.com\havoc-io\go-keytar
+
+# Run tests
+# HACK: Use 'call ...' to invoke the test runner because AppVeyor can't parse a
+# command starting with %
+test_script:
+  - cd %GOPATH%\src\github.com\havoc-io\go-keytar
+  - go test
+
+# Send notifications
+notifications:
+  - provider: Email
+    to:
+      - jacob@havoc.io
