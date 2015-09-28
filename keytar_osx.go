@@ -1,4 +1,5 @@
 // +build darwin
+
 package keytar
 
 // #cgo LDFLAGS: -framework CoreFoundation -framework Security
@@ -34,7 +35,7 @@ func (KeychainOSX) AddPassword(service, account, password string) error {
 		passwordCString,
 		nil)
 
-	// We're responsible for freeing the strings
+	// We're responsible for freeing any C strings generated
 	C.free(unsafe.Pointer(serviceCString))
 	C.free(unsafe.Pointer(accountCString))
 	C.free(passwordCString)
@@ -126,7 +127,7 @@ func (KeychainOSX) DeletePassword(service, account string) error {
 	return nil
 }
 
+// Keychain factory
 func NewKeychain() Keychain {
-	// Use platform-specific keychain implementation
 	return &KeychainOSX{}
 }

@@ -6,8 +6,8 @@ import "testing"
 const (
 	NonExistentService = "keytar-test-bad-service"
 	NonExistentAccount = "keytar-test-bad-account"
-	Service            = "keytar-test-service-世界"
-	Account            = "keytar-世界@example.org"
+	Service            = "keytar-test-service-世界.example.org"
+	Account            = "keytar-世界"
 	Password           = "$uP3RSecre7世界"
 	AlternatePassword  = "GeorgeWashington"
 )

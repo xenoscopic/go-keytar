@@ -1,7 +1,7 @@
 Copyright (c) 2015 Jacob Howard
 Based on code copyright (c) 2013 GitHub Inc.
 
-Both codebases released under the MIT License:
+Both projects released under the MIT License:
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
