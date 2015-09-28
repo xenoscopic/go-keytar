@@ -2,19 +2,17 @@
 version: 1.0.0.{build}
 
 # Configuration
+# TODO: I'd like to figure out a way to use a build matrix here to support both
+# C:\go-x64 and C:\go-x86, but we can't use the GOPATH environment variable in
+# the clone_folder setting, so I'm not sure how to do this
 environment:
-  matrix:
-    - GOPATH: C:\go-x86
-    - GOPATH: C:\go-x64
+  GOPATH: C:\go-x64
 
 # Set up clone path
-clone_folder: %GOPATH%\src\github.com\havoc-io\go-keytar
+clone_folder: C:\go-x64\src\github.com\havoc-io\go-keytar
 
 # Run tests
-# HACK: Use 'call ...' to invoke the test runner because AppVeyor can't parse a
-# command starting with %
 test_script:
-  - cd %GOPATH%\src\github.com\havoc-io\go-keytar
   - go test
 
 # Send notifications
