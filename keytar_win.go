@@ -9,6 +9,7 @@ import "C"
 import (
 	// System imports
 	"fmt"
+	"unicode/utf8"
 	"unsafe"
 	"syscall"
 )
@@ -25,6 +26,14 @@ func targetFormat(service, account string) string {
 type KeychainWindows struct{}
 
 func (KeychainWindows) AddPassword(service, account, password string) error {
+	// Validate input
+	serviceValid := utf8.ValidString(service)
+	accountValid := utf8.ValidString(account)
+	passwordValid := utf8.ValidString(password)
+	if !(serviceValid && accountValid && passwordValid) {
+		return ErrInvalidValue
+	}
+
 	// Compute target item name
 	target := targetFormat(service, account)
 
@@ -62,6 +71,13 @@ func (KeychainWindows) AddPassword(service, account, password string) error {
 }
 
 func (KeychainWindows) GetPassword(service, account string) (string, error) {
+	// Validate input
+	serviceValid := utf8.ValidString(service)
+	accountValid := utf8.ValidString(account)
+	if !(serviceValid && accountValid) {
+		return "", ErrInvalidValue
+	}
+
 	// Compute target item name
 	target := targetFormat(service, account)
 
@@ -93,6 +109,13 @@ func (KeychainWindows) GetPassword(service, account string) (string, error) {
 }
 
 func (KeychainWindows) DeletePassword(service, account string) error {
+	// Validate input
+	serviceValid := utf8.ValidString(service)
+	accountValid := utf8.ValidString(account)
+	if !(serviceValid && accountValid) {
+		return ErrInvalidValue
+	}
+
 	// Compute target item name
 	target := targetFormat(service, account)
 

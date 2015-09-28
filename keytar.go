@@ -12,7 +12,10 @@ var (
 	ErrInvalidValue = errors.New("an invalid value was provided")
 )
 
-// All string passed to this interface must be encoded in UTF-8
+// All strings passed to this interface must be encoded in UTF-8.  GetPassword
+// MAY return a value which is not UTF-8 encoded if the original keychain entry
+// was created by another service which stored the password in a non-UTF-8
+// encoding.
 type Keychain interface {
 	AddPassword(service, account, password string) error
 	GetPassword(service, account string) (string, error)
