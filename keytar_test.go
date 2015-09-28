@@ -25,7 +25,7 @@ func TestNonExistentGet(t *testing.T) {
 		NonExistentService,
 		NonExistentAccount)
 	if password != "" || err == nil {
-		t.Error("retrieval of non-existent service/account password succeeded " + password)
+		t.Error("retrieval of non-existent service/account password succeeded ")
 	}
 }
 
