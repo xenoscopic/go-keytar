@@ -3,24 +3,26 @@ version: 1.0.0.{build}
 
 # Configuration
 # TODO: I'd like to figure out a way to use a build matrix here to support both
-# C:\go-x64 and C:\go-x86, but we can't use the GOPATH environment variable in
-# the clone_folder setting, so I'm not sure how to do this
+# C:\go-x86 and C:\go-x64, but we can't use the GOPATH environment variable in
+# the clone_folder setting, and Mingw-w64 isn't installed (only Mingw, which
+# doesn't support 64-bit compilation), so I'm not sure how to do this.  For now
+# we'll just live with 32-bit tests only.
 environment:
-  GOPATH: C:\go-x64
+  GOPATH: C:\go-x86
 
 # Set up clone path
-clone_folder: C:\go-x64\src\github.com\havoc-io\go-keytar
+clone_folder: C:\go-x86\src\github.com\havoc-io\go-keytar
 
 # Run build (just here to stop the default Visual Studio build)
 build_script:
   - set PATH=C:\MinGW\bin;%PATH%
-  - cd C:\go-x64\src\github.com\havoc-io\go-keytar
+  - cd C:\go-x86\src\github.com\havoc-io\go-keytar
   - go build
 
 # Run tests
 test_script:
   - set PATH=C:\MinGW\bin;%PATH%
-  - cd C:\go-x64\src\github.com\havoc-io\go-keytar
+  - cd C:\go-x86\src\github.com\havoc-io\go-keytar
   - go test
 
 # Send notifications
