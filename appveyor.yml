@@ -9,6 +9,7 @@ version: 1.0.0.{build}
 # we'll just live with 32-bit tests only.
 environment:
   GOPATH: C:\go-x86
+  GOARCH: 386
 
 # Set up clone path
 clone_folder: C:\go-x86\src\github.com\havoc-io\go-keytar
