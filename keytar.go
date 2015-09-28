@@ -7,6 +7,7 @@ import (
 
 // Error definitions
 var (
+	ErrUnsupported = errors.New("operation unsupported on this platform")
 	ErrUnknown  = errors.New("unknown keychain failure")
 	ErrNotFound = errors.New("keychain entry not found")
 	ErrInvalidValue = errors.New("an invalid value was provided")

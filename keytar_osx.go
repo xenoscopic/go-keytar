@@ -122,6 +122,6 @@ func (KeychainOSX) DeletePassword(service, account string) error {
 }
 
 // Keychain factory
-func NewKeychain() Keychain {
-	return &KeychainOSX{}
+func NewKeychain() (Keychain, error) {
+	return &KeychainOSX{}, nil
 }

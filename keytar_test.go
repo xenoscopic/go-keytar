@@ -12,80 +12,99 @@ const (
 	AlternatePassword  = "GeorgeWashington"
 )
 
-// Create a keychain
-var keychain = NewKeychain()
-
 // Test that a non-existent lookup fails
 func TestNonExistentGet(t *testing.T) {
-	p, e := keychain.GetPassword(NonExistentService, NonExistentAccount)
-	if p != "" || e == nil {
-		t.Error("retrieval of non-existent service/account password succeeded")
+	// Create a keychain
+	keychain, err := NewKeychain()
+	if err != nil {
+		t.Fatalf("unable to create keychain")
+	}
+
+	// Test that a non-existent lookup fail
+	password, err := keychain.GetPassword(
+		NonExistentService,
+		NonExistentAccount)
+	if password != "" || err == nil {
+		t.Error("retrieval of non-existent service/account password succeeded " + password)
 	}
 }
 
-// Make sure replace password works for non-existent passwords
 func TestNonExistentReplace(t *testing.T) {
+	// Create a keychain
+	keychain, err := NewKeychain()
+	if err != nil {
+		t.Fatalf("unable to create keychain")
+	}
+
 	// Replace the password
-	e := ReplacePassword(
+	err = ReplacePassword(
 		keychain,
 		NonExistentService,
 		NonExistentAccount,
 		AlternatePassword)
-	if e != nil {
+	if err != nil {
 		t.Error("replacement of non-existent password failed")
 	}
 
 	// Get/verify the alternate password
-	p, e := keychain.GetPassword(NonExistentService, NonExistentAccount)
-	if e != nil {
+	password, err := keychain.GetPassword(
+		NonExistentService,
+		NonExistentAccount)
+	if err != nil {
 		t.Error("password retrieval failed")
 	}
-	if p != AlternatePassword {
+	if password != AlternatePassword {
 		t.Error("password mismatch")
 	}
 
 	// Delete it
-	e = keychain.DeletePassword(NonExistentService, NonExistentAccount)
-	if e != nil {
+	err = keychain.DeletePassword(NonExistentService, NonExistentAccount)
+	if err != nil {
 		t.Error("password deletion failed")
 	}
 }
 
 // Make sure the standard password lifecycle works
 func TestLifecycle(t *testing.T) {
+	// Create a keychain
+	keychain, err := NewKeychain()
+	if err != nil {
+		t.Fatalf("unable to create keychain")
+	}
+
 	// Add a password
-	e := keychain.AddPassword(Service, Account, Password)
-	if e != nil {
+	err = keychain.AddPassword(Service, Account, Password)
+	if err != nil {
 		t.Error("password addition failed")
 	}
 
 	// Get/verify the password
-	p, e := keychain.GetPassword(Service, Account)
-	if e != nil {
+	password, err := keychain.GetPassword(Service, Account)
+	if err != nil {
 		t.Error("password retrieval failed")
 	}
-	if p != Password {
+	if password != Password {
 		t.Error("password mismatch")
 	}
 
 	// Replace the password
-	e = ReplacePassword(keychain, Service, Account, AlternatePassword)
-	if e != nil {
+	err = ReplacePassword(keychain, Service, Account, AlternatePassword)
+	if err != nil {
 		t.Error("password replacement failed")
 	}
 
 	// Get/verify the alternate password
-	p, e = keychain.GetPassword(Service, Account)
-	if e != nil {
+	password, err = keychain.GetPassword(Service, Account)
+	if err != nil {
 		t.Error("password retrieval failed")
 	}
-	if p != AlternatePassword {
+	if password != AlternatePassword {
 		t.Error("password mismatch")
 	}
 
 	// Delete the password
-	e = keychain.DeletePassword(Service, Account)
-	if e != nil {
+	err = keychain.DeletePassword(Service, Account)
+	if err != nil {
 		t.Error("password deletion failed")
 	}
 }

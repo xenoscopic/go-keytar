@@ -138,6 +138,6 @@ func (KeychainWindows) DeletePassword(service, account string) error {
 }
 
 // Keychain factory
-func NewKeychain() Keychain {
-	return &KeychainWindows{}
+func NewKeychain() (Keychain, error) {
+	return &KeychainWindows{}, nil
 }
