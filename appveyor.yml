@@ -2,6 +2,9 @@
 version: 1.0.0.{build}
 
 # Configuration
+# NOTE: Sadly, there is no way to test 32-bit.  There is a 32-bit Go installed
+# in C:\go-x86, but the MSYS2/Mingw-w64 build is 64-bit only, so it can't be
+# used to compile/link 32-bit cgo code.
 environment:
   GOPATH: C:\projects
   MINGWBIN: C:\msys64\mingw64\bin
