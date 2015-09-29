@@ -1,5 +1,3 @@
-// +build windows
-
 package keytar
 
 // #include <windows.h>

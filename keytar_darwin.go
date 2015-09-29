@@ -1,5 +1,3 @@
-// +build darwin
-
 package keytar
 
 // #cgo LDFLAGS: -framework CoreFoundation -framework Security

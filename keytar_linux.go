@@ -1,12 +1,13 @@
-// +build linux
-
 package keytar
 
 /*
 #cgo pkg-config: glib-2.0 gnome-keyring-1
 
+// Standard includes
 #include <stdlib.h>
 #include <string.h>
+
+// GNOME includes
 #include <glib.h>
 #include <gnome-keyring.h>
 
@@ -186,23 +187,20 @@ func (k KeychainLinux) AddPassword(service, account, password string) error {
 	// Convert values to C strings (can't use rawStringPtr since we can't
 	// specify length)
 	displayCStr := C.CString(display)
+	defer C.free(unsafe.Pointer(displayCStr))
 	serviceCStr := C.CString(service)
+	defer C.free(unsafe.Pointer(serviceCStr))
 	accountCStr := C.CString(account)
+	defer C.free(unsafe.Pointer(accountCStr))
 	passwordCStr := C.CString(password)
-
-	// Do the add
-	result := C.addPassword(displayCStr, serviceCStr, accountCStr, passwordCStr)
-
-	// Free strings
-	C.free(unsafe.Pointer(displayCStr))
-	C.free(unsafe.Pointer(serviceCStr))
-	C.free(unsafe.Pointer(accountCStr))
 	C.free(unsafe.Pointer(passwordCStr))
 
-	// Check the result
-	if result < 0 {
+	// Do the add and check for errors
+	if C.addPassword(displayCStr, serviceCStr, accountCStr, passwordCStr) < 0 {
 		return ErrUnknown
 	}
+
+	// All done
 	return nil
 }
 
@@ -217,18 +215,13 @@ func (k KeychainLinux) GetPassword(service, account string) (string, error) {
 	// Convert values to C strings (can't use rawStringPtr since we can't
 	// specify length)
 	serviceCStr := C.CString(service)
+	defer C.free(unsafe.Pointer(serviceCStr))
 	accountCStr := C.CString(account)
+	defer C.free(unsafe.Pointer(accountCStr))
 
-	// Get the password
+	// Get the password and check for errors
 	var passwordCStr *C.char
-	result := C.getPassword(serviceCStr, accountCStr, &passwordCStr)
-
-	// Free strings
-	C.free(unsafe.Pointer(serviceCStr))
-	C.free(unsafe.Pointer(accountCStr))
-
-	// Check the result
-	if result < 0 {
+	if C.getPassword(serviceCStr, accountCStr, &passwordCStr) < 0 {
 		return "", ErrNotFound
 	}
 
@@ -251,17 +244,12 @@ func (k KeychainLinux) DeletePassword(service, account string) error {
 	// Convert values to C strings (can't use rawStringPtr since we can't
 	// specify length)
 	serviceCStr := C.CString(service)
+	defer C.free(unsafe.Pointer(serviceCStr))
 	accountCStr := C.CString(account)
+	defer C.free(unsafe.Pointer(accountCStr))
 
-	// Delete the password
-	result := C.deletePassword(serviceCStr, accountCStr)
-
-	// Free strings
-	C.free(unsafe.Pointer(serviceCStr))
-	C.free(unsafe.Pointer(accountCStr))
-
-	// Check the results
-	if result < 0 {
+	// Delete the password and check for errors
+	if C.deletePassword(serviceCStr, accountCStr) < 0 {
 		return ErrUnknown
 	}
 
