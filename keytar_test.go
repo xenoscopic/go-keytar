@@ -36,7 +36,8 @@ func TestNonExistentGet(t *testing.T) {
 	// Test that a non-existent lookup fail
 	password, err := keychain.GetPassword(
 		NonExistentService,
-		NonExistentAccount)
+		NonExistentAccount,
+	)
 	if password != "" || err == nil {
 		t.Error("retrieval of non-existent service/account password succeeded ")
 	}
@@ -54,7 +55,8 @@ func TestNonExistentReplace(t *testing.T) {
 		keychain,
 		NonExistentService,
 		NonExistentAccount,
-		AlternatePassword)
+		AlternatePassword,
+	)
 	if err != nil {
 		t.Error("replacement of non-existent password failed")
 	}
@@ -62,7 +64,8 @@ func TestNonExistentReplace(t *testing.T) {
 	// Get/verify the alternate password
 	password, err := keychain.GetPassword(
 		NonExistentService,
-		NonExistentAccount)
+		NonExistentAccount,
+	)
 	if err != nil {
 		t.Error("password retrieval failed")
 	}

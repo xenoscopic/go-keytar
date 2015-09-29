@@ -91,7 +91,8 @@ Replace a password:
 		keychain,
 		"example.org",
 		"George",
-		"M0r3-$eCr37")
+		"M0r3-$eCr37",
+	)
 	if err != nil {
 		// Handle error
 	}

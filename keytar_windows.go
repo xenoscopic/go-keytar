@@ -96,7 +96,8 @@ func (KeychainWindows) GetPassword(service, account string) (string, error) {
 	// Extract the password blob
 	result := C.GoStringN(
 		(*C.char)(unsafe.Pointer(credential.CredentialBlob)),
-		C.int(credential.CredentialBlobSize))
+		C.int(credential.CredentialBlobSize),
+	)
 
 	// Free the credential memory
 	C.CredFree(C.PVOID(credential))

@@ -31,7 +31,8 @@ func (KeychainOSX) AddPassword(service, account, password string) error {
 		(*C.char)(rawStringPtr(account)),
 		C.UInt32(len(password)),
 		rawStringPtr(password),
-		nil)
+		nil,
+	)
 
 	// Check for errors
 	if status != C.errSecSuccess {
@@ -61,7 +62,8 @@ func (KeychainOSX) GetPassword(service, account string) (string, error) {
 		(*C.char)(rawStringPtr(account)),
 		&passwordDataLength,
 		&passwordData,
-		nil)
+		nil,
+	)
 
 	// Check for errors
 	if status != C.errSecSuccess {
@@ -96,7 +98,8 @@ func (KeychainOSX) DeletePassword(service, account string) error {
 		(*C.char)(rawStringPtr(account)),
 		nil,
 		nil,
-		&item)
+		&item,
+	)
 
 	// Check for errors
 	if status != C.errSecSuccess {
