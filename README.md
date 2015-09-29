@@ -45,11 +45,11 @@ compilation.
 On Windows and OS X all other library dependencies are met by the system.
 
 On Linux you need to ensure that the GNOME Keyring development package is
-installed.  On Ubuntu systems, do:
+installed.  On Ubuntu systems do:
 
     sudo apt-get install libgnome-keyring-dev
 
-On Red Hat systems, do:
+On Red Hat systems do:
 
     sudo yum install gnome-keyring-devel
 
@@ -60,7 +60,7 @@ For all other Linux systems consult your package manager.
 
 The interface to the platform's default keychain is provided by the `Keychain`
 interface.  To create the appropriate `Keychain` interface instance for the
-current platform, simply do:
+current platform do:
 
 	keychain, err := keytar.NewKeychain()
 	if err != nil {
