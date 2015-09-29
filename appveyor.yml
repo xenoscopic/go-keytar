@@ -2,28 +2,28 @@
 version: 1.0.0.{build}
 
 # Configuration
-# TODO: I'd like to figure out a way to use a build matrix here to support both
-# C:\go-x86 and C:\go-x64, but we can't use the GOPATH environment variable in
-# the clone_folder setting, and Mingw-w64 isn't installed (only Mingw, which
-# doesn't support 64-bit compilation), so I'm not sure how to do this.  For now
-# we'll just live with 32-bit tests only.
+# TODO: I'd like to enable 64-bit builds, but 64-bit cgo requires Mingw-w64,
+# which isn't available on Appveyor.  64-bit Go is available however, in
+# C:\go-x64, and is in the PATH by default (which is why we have to override
+# PATH).
 environment:
-  GOPATH: C:\go-x86
+  GOROOT: C:\go-x86
   GOARCH: 386
+  GOPATH: C:\projects
 
 # Set up clone path
-clone_folder: C:\go-x86\src\github.com\havoc-io\go-keytar
+clone_folder: C:\projects\src\github.com\havoc-io\go-keytar
 
 # Run build (just here to stop the default Visual Studio build)
 build_script:
-  - set PATH=C:\MinGW\bin;%PATH%
-  - cd C:\go-x86\src\github.com\havoc-io\go-keytar
+  - set PATH=%GOROOT%\bin;C:\MinGW\bin;%PATH%
+  - cd %GOPATH%\src\github.com\havoc-io\go-keytar
   - go build
 
 # Run tests
 test_script:
-  - set PATH=C:\MinGW\bin;%PATH%
-  - cd C:\go-x86\src\github.com\havoc-io\go-keytar
+  - set PATH=%GOROOT%\bin;C:\MinGW\bin;%PATH%
+  - cd %GOPATH%\src\github.com\havoc-io\go-keytar
   - go test
 
 # Send notifications
