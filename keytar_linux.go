@@ -165,7 +165,6 @@ import "C"
 import (
 	// System imports
 	"fmt"
-	"unicode/utf8"
 	"unsafe"
 )
 
@@ -174,9 +173,9 @@ type KeychainLinux struct{}
 
 func (k KeychainLinux) AddPassword(service, account, password string) error {
 	// Validate input
-	serviceValid := utf8.ValidString(service)
-	accountValid := utf8.ValidString(account)
-	passwordValid := utf8.ValidString(password)
+	serviceValid := isValidNonNullUTF8(service)
+	accountValid := isValidNonNullUTF8(account)
+	passwordValid := isValidNonNullUTF8(password)
 	if !(serviceValid && accountValid && passwordValid) {
 		return ErrInvalidValue
 	}
@@ -206,8 +205,8 @@ func (k KeychainLinux) AddPassword(service, account, password string) error {
 
 func (k KeychainLinux) GetPassword(service, account string) (string, error) {
 	// Validate input
-	serviceValid := utf8.ValidString(service)
-	accountValid := utf8.ValidString(account)
+	serviceValid := isValidNonNullUTF8(service)
+	accountValid := isValidNonNullUTF8(account)
 	if !(serviceValid && accountValid) {
 		return "", ErrInvalidValue
 	}
@@ -235,8 +234,8 @@ func (k KeychainLinux) GetPassword(service, account string) (string, error) {
 
 func (k KeychainLinux) DeletePassword(service, account string) error {
 	// Validate input
-	serviceValid := utf8.ValidString(service)
-	accountValid := utf8.ValidString(account)
+	serviceValid := isValidNonNullUTF8(service)
+	accountValid := isValidNonNullUTF8(account)
 	if !(serviceValid && accountValid) {
 		return ErrInvalidValue
 	}

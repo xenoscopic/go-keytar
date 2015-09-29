@@ -116,9 +116,5 @@ was created by another program not enforcing this constraint.
   platform APIs.  At the moment, many failures are classified as `ErrUnknown`,
   but we could probably figure out the real error and expand our list of error
   codes.
-- Add checks against null bytes in UTF-8 strings.  This is uncommon, and won't
-  cause crashes, though it will cause truncation with GNOME Keyring since we
-  can't pass a string length.  Our best option is probably to canonicalize when
-  using GNOME Keyring.
 - Figure out if Go has a secure fallback that we could use somewhere in its
   crypto libraries

@@ -12,6 +12,19 @@ const (
 	AlternatePassword  = "GeorgeWashington"
 )
 
+// Test invalid UTF-8 and null byte detection
+func TestUTF8Validation(t *testing.T) {
+	// Check an invalid string
+	if isValidNonNullUTF8("\xbd\xb2\x3d\xbc\x20\xe2\x8c\x98") {
+		t.Error("invalid UTF-8 string passed validation")
+	}
+
+	// Check a valid string with null bytes
+	if isValidNonNullUTF8("世界\x00Jacob") {
+		t.Error("UTF-8 string with null byte passed validation")
+	}
+}
+
 // Test that a non-existent lookup fails
 func TestNonExistentGet(t *testing.T) {
 	// Create a keychain

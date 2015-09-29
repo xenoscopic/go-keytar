@@ -7,7 +7,6 @@ import "C"
 
 import (
 	// System imports
-	"unicode/utf8"
 	"unsafe"
 )
 
@@ -16,9 +15,9 @@ type KeychainOSX struct{}
 
 func (KeychainOSX) AddPassword(service, account, password string) error {
 	// Validate input
-	serviceValid := utf8.ValidString(service)
-	accountValid := utf8.ValidString(account)
-	passwordValid := utf8.ValidString(password)
+	serviceValid := isValidNonNullUTF8(service)
+	accountValid := isValidNonNullUTF8(account)
+	passwordValid := isValidNonNullUTF8(password)
 	if !(serviceValid && accountValid && passwordValid) {
 		return ErrInvalidValue
 	}
@@ -45,8 +44,8 @@ func (KeychainOSX) AddPassword(service, account, password string) error {
 
 func (KeychainOSX) GetPassword(service, account string) (string, error) {
 	// Validate input
-	serviceValid := utf8.ValidString(service)
-	accountValid := utf8.ValidString(account)
+	serviceValid := isValidNonNullUTF8(service)
+	accountValid := isValidNonNullUTF8(account)
 	if !(serviceValid && accountValid) {
 		return "", ErrInvalidValue
 	}
@@ -81,8 +80,8 @@ func (KeychainOSX) GetPassword(service, account string) (string, error) {
 
 func (KeychainOSX) DeletePassword(service, account string) error {
 	// Validate input
-	serviceValid := utf8.ValidString(service)
-	accountValid := utf8.ValidString(account)
+	serviceValid := isValidNonNullUTF8(service)
+	accountValid := isValidNonNullUTF8(account)
 	if !(serviceValid && accountValid) {
 		return ErrInvalidValue
 	}
