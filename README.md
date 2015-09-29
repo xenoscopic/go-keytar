@@ -8,9 +8,9 @@ Keyring implementation has been modified to work on older GNOME versions that
 don't provide the simple password storage API.
 
 This package is designed to add, get, replace, and delete passwords in the
-system's keychain.  On OS X the passwords are managed by the Keychain, on Linux
-they are managed by GNOME Keyring, and on Windows they are managed by Credential
-Vault.
+system's default keychain.  On OS X the passwords are managed by the Keychain,
+on Linux they are managed by GNOME Keyring, and on Windows they are managed by
+Credential Vault.
 
 
 ## Status
@@ -37,14 +37,14 @@ You'll probably have a lot better luck if you do this in a GNOME session.
 ## Dependencies
 
 On all platforms, you'll need a Go installation that supports cgo compilation.
-On Windows, this means you'll need Mingw-w64, because Mingw doesn't support the
-Windows Credential Vault API, and even if it did, doesn't support 64-bit
-compilation.  On other platforms, Go should just use the system compiler for cgo
+On Windows, this means that you'll need Mingw-w64, because Mingw doesn't support
+the Windows Credential Vault API and, even if it did, it doesn't support 64-bit
+compilation.  On other platforms Go should just use the system compiler for cgo
 compilation.
 
-On Windows and OS X, all other library dependencies are met by the system.
+On Windows and OS X all other library dependencies are met by the system.
 
-On Linux, you need to ensure that the GNOME Keyring development package is
+On Linux you need to ensure that the GNOME Keyring development package is
 installed.  On Ubuntu systems, do:
 
     sudo apt-get install libgnome-keyring-dev
@@ -53,7 +53,7 @@ On Red Hat systems, do:
 
     sudo yum install gnome-keyring-devel
 
-For all other Linux systems, consult your package manager.
+For all other Linux systems consult your package manager.
 
 
 ## Usage
