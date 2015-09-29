@@ -5,24 +5,21 @@ version: 1.0.0.{build}
 environment:
   GOPATH: C:\projects
   MINGWBIN: C:\msys64\mingw64\bin
-  matrix:
-    - GOROOT: C:\go-x86
-      GOARCH: 386
-    - GOROOT: C:\go-x64
-      GOARCH: amd64
+  GOROOT: C:\go
+  GOARCH: amd64
 
 # Set up clone path
 clone_folder: C:\projects\src\github.com\havoc-io\go-keytar
 
 # Run build (just here to stop the default Visual Studio build)
 build_script:
-  - set PATH=%GOROOT%\bin;%MINGWBIN%;%PATH%
+  - set PATH=%MINGWBIN%;%PATH%
   - cd %GOPATH%\src\github.com\havoc-io\go-keytar
   - go build
 
 # Run tests
 test_script:
-  - set PATH=%GOROOT%\bin;%MINGWBIN%;%PATH%
+  - set PATH=%MINGWBIN%;%PATH%
   - cd %GOPATH%\src\github.com\havoc-io\go-keytar
   - go test
 
