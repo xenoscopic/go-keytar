@@ -8,6 +8,7 @@ environment:
     MINGWBIN: C:\MinGW\bin
     GOROOT: C:\go-x86
     GOARCH: 386
+    CC: gcc
   - GOPATH: C:\projects
     MINGWBIN: C:\msys64\mingw64\bin
     GOROOT: C:\go
