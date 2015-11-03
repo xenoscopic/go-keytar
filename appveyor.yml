@@ -9,7 +9,7 @@ environment:
 
   matrix:
   - GOARCH: 386
-    MINGWROOT: C:\MinGW
+    MINGWROOT: C:\msys64\mingw32
   - GOARCH: amd64
     MINGWROOT: C:\msys64\mingw64
 
