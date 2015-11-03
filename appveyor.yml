@@ -2,8 +2,9 @@
 version: 1.0.0.{build}
 
 # Configuration
+# NOTE: Structure of MSYS2 installation outlined in this comment:
+# http://help.appveyor.com/discussions/suggestions/615-support-for-msys2#comment_37571757
 environment:
-  GOVERSION: 1.5.1
   GOROOT: C:\go
   GOPATH: C:\projects
 
@@ -15,12 +16,6 @@ environment:
 
 # Set up clone path
 clone_folder: C:\projects\src\github.com\havoc-io\go-keytar
-
-# Install dependencies (an upgraded Go version)
-install:
-  - rmdir C:\go /s /q
-  - appveyor DownloadFile https://storage.googleapis.com/golang/go%GOVERSION%.windows-%GOARCH%.zip
-  - 7z x go%GOVERSION%.windows-%GOARCH%.zip -oC:\ >nul
 
 # Run build (just here to stop the default Visual Studio build)
 build_script:
