@@ -30,7 +30,7 @@ func TestNonExistentGet(t *testing.T) {
 	// Create a keychain
 	keychain, err := NewKeychain()
 	if err != nil {
-		t.Fatalf("unable to create keychain")
+		t.Fatal("unable to create keychain")
 	}
 
 	// Test that a non-existent lookup fail
@@ -47,7 +47,7 @@ func TestNonExistentReplace(t *testing.T) {
 	// Create a keychain
 	keychain, err := NewKeychain()
 	if err != nil {
-		t.Fatalf("unable to create keychain")
+		t.Fatal("unable to create keychain")
 	}
 
 	// Replace the password
@@ -85,7 +85,7 @@ func TestLifecycle(t *testing.T) {
 	// Create a keychain
 	keychain, err := NewKeychain()
 	if err != nil {
-		t.Fatalf("unable to create keychain")
+		t.Fatal("unable to create keychain")
 	}
 
 	// Add a password

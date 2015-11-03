@@ -1,5 +1,6 @@
 package keytar
 
+// #include <stdlib.h>
 // #include <windows.h>
 // #include <wincred.h>
 import "C"
@@ -48,7 +49,9 @@ func (KeychainWindows) AddPassword(service, account, password string) error {
 	// Convert the password blob.  This is just stored as a raw array of bytes,
 	// so we can store it UTF-8 encoded.
 	passwordBlobSize := C.DWORD(len(password))
-	passwordBlob := C.LPBYTE(rawStringPtr(password))
+	passwordCStr := C.CString(password)
+	defer C.free(passwordCStr)
+	passwordBlob := C.LPBYTE(passwordCStr)
 
 	// Set up the credential
 	var credential C.CREDENTIALW

@@ -183,8 +183,7 @@ func (k KeychainLinux) AddPassword(service, account, password string) error {
 	// Compute a display name and convert it to a C string
 	display := fmt.Sprintf("%s@%s", service, account)
 
-	// Convert values to C strings (can't use rawStringPtr since we can't
-	// specify length)
+	// Convert values to C strings
 	displayCStr := C.CString(display)
 	defer C.free(unsafe.Pointer(displayCStr))
 	serviceCStr := C.CString(service)
@@ -211,8 +210,7 @@ func (k KeychainLinux) GetPassword(service, account string) (string, error) {
 		return "", ErrInvalidValue
 	}
 
-	// Convert values to C strings (can't use rawStringPtr since we can't
-	// specify length)
+	// Convert values to C strings
 	serviceCStr := C.CString(service)
 	defer C.free(unsafe.Pointer(serviceCStr))
 	accountCStr := C.CString(account)
@@ -240,8 +238,7 @@ func (k KeychainLinux) DeletePassword(service, account string) error {
 		return ErrInvalidValue
 	}
 
-	// Convert values to C strings (can't use rawStringPtr since we can't
-	// specify length)
+	// Convert values to C strings
 	serviceCStr := C.CString(service)
 	defer C.free(unsafe.Pointer(serviceCStr))
 	accountCStr := C.CString(account)

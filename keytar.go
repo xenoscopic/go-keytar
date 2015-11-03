@@ -3,6 +3,7 @@ package keytar
 import (
 	// System imports
 	"errors"
+	"unicode/utf8"
 )
 
 // Error definitions
@@ -12,6 +13,24 @@ var (
 	ErrNotFound = errors.New("keychain entry not found")
 	ErrInvalidValue = errors.New("an invalid value was provided")
 )
+
+// Validates a string as UTF-8 with no null bytes
+func isValidNonNullUTF8(s string) bool {
+	// Check that this is valid UTF-8
+	if !utf8.ValidString(s) {
+		return false
+	}
+
+	// Check that there are no null-bytes (which are allowed by UTF-8)
+	for i := 0; i < len(s); i++ {
+		if s[i] == 0 {
+			return false
+		}
+	}
+
+	// All done
+	return true
+}
 
 // All strings passed to this interface must be encoded in UTF-8.  GetPassword
 // MAY return a value which is not UTF-8 encoded if the original keychain entry

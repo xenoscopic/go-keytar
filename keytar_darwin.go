@@ -1,6 +1,7 @@
 package keytar
 
 // #cgo LDFLAGS: -framework CoreFoundation -framework Security
+// #include <stdlib.h>
 // #include <CoreFoundation/CoreFoundation.h>
 // #include <Security/Security.h>
 import "C"
@@ -22,15 +23,23 @@ func (KeychainOSX) AddPassword(service, account, password string) error {
 		return ErrInvalidValue
 	}
 
+	// Convert values to C strings
+	serviceCStr := C.CString(service)
+	defer C.free(unsafe.Pointer(serviceCStr))
+	accountCStr := C.CString(account)
+	defer C.free(unsafe.Pointer(accountCStr))
+	passwordBlob := unsafe.Pointer(C.CString(password))
+	defer C.free(passwordBlob)
+
 	// Try to add the password
 	status := C.SecKeychainAddGenericPassword(
 		nil,
 		C.UInt32(len(service)),
-		(*C.char)(rawStringPtr(service)),
+		serviceCStr,
 		C.UInt32(len(account)),
-		(*C.char)(rawStringPtr(account)),
+		accountCStr,
 		C.UInt32(len(password)),
-		rawStringPtr(password),
+		passwordBlob,
 		nil,
 	)
 
@@ -51,15 +60,21 @@ func (KeychainOSX) GetPassword(service, account string) (string, error) {
 		return "", ErrInvalidValue
 	}
 
+	// Convert values to C strings
+	serviceCStr := C.CString(service)
+	defer C.free(unsafe.Pointer(serviceCStr))
+	accountCStr := C.CString(account)
+	defer C.free(unsafe.Pointer(accountCStr))
+
 	// Look for a match
 	var passwordData unsafe.Pointer
 	var passwordDataLength C.UInt32
 	status := C.SecKeychainFindGenericPassword(
 		nil,
 		C.UInt32(len(service)),
-		(*C.char)(rawStringPtr(service)),
+		serviceCStr,
 		C.UInt32(len(account)),
-		(*C.char)(rawStringPtr(account)),
+		accountCStr,
 		&passwordDataLength,
 		&passwordData,
 		nil,
@@ -88,14 +103,20 @@ func (KeychainOSX) DeletePassword(service, account string) error {
 		return ErrInvalidValue
 	}
 
+	// Convert values to C strings
+	serviceCStr := C.CString(service)
+	defer C.free(unsafe.Pointer(serviceCStr))
+	accountCStr := C.CString(account)
+	defer C.free(unsafe.Pointer(accountCStr))
+
 	// Grab the item
 	var item C.SecKeychainItemRef
 	status := C.SecKeychainFindGenericPassword(
 		nil,
 		C.UInt32(len(service)),
-		(*C.char)(rawStringPtr(service)),
+		serviceCStr,
 		C.UInt32(len(account)),
-		(*C.char)(rawStringPtr(account)),
+		accountCStr,
 		nil,
 		nil,
 		&item,
