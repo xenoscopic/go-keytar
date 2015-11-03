@@ -49,9 +49,9 @@ func (KeychainWindows) AddPassword(service, account, password string) error {
 	// Convert the password blob.  This is just stored as a raw array of bytes,
 	// so we can store it UTF-8 encoded.
 	passwordBlobSize := C.DWORD(len(password))
-	passwordCStr := C.CString(password)
-	defer C.free(passwordCStr)
-	passwordBlob := C.LPBYTE(passwordCStr)
+	passwordVoidBlob := unsafe.Pointer(C.CString(password))
+	defer C.free(passwordVoidBlob)
+	passwordBlob := C.LPBYTE(passwordVoidBlob)
 
 	// Set up the credential
 	var credential C.CREDENTIALW
