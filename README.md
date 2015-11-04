@@ -8,7 +8,7 @@ Keyring implementation has been modified to work on older GNOME versions that
 don't provide the simple password storage API.
 
 This package is designed to add, get, replace, and delete passwords in the
-system's default keychain.  On OS X, passwords are managed by the Keychain.  On
+user's default keychain.  On OS X, passwords are managed by the Keychain.  On
 Linux, passwords are managed by GNOME Keyring.  On Windows, passwords are
 managed by Credential Vault.
 
@@ -59,10 +59,10 @@ For all other Linux distributions, consult your package manager.
 ## Usage
 
 The interface to the platform's default keychain is provided by the `Keychain`
-interface.  To create the appropriate `Keychain` interface instance for the
-current platform, do:
+interface.  To get the appropriate `Keychain` instance for the current platform,
+do:
 
-	keychain, err := keytar.NewKeychain()
+	keychain, err := keytar.GetKeychain()
 	if err != nil {
 		// Handle error (most likely ErrUnsupported)
 	}

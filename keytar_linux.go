@@ -168,7 +168,8 @@ import (
 	"unsafe"
 )
 
-// Linux keychain implementation
+// keychainLinux implements the Keychain interface on Linux by using the
+// GNOME Keyring infrastructure to store items in the user's keyring.
 type keychainLinux struct{}
 
 func (*keychainLinux) AddPassword(service, account, password string) error {

@@ -11,7 +11,8 @@ import (
 	"unsafe"
 )
 
-// OS X keychain implementation
+// keychainOSX implements the Keychain interface on OS X by using the Security
+// framework to store items in the user's login keychain.
 type keychainOSX struct{}
 
 func (*keychainOSX) AddPassword(service, account, password string) error {

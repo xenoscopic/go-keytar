@@ -20,7 +20,8 @@ func targetFormat(service, account string) string {
 	return fmt.Sprintf("%s@%s", account, service)
 }
 
-// Windows keychain implementation
+// keychainWindows implements the Keychain interface on Windows by using the
+// Credential Vault infrastructure to store items.
 type keychainWindows struct{}
 
 func (*keychainWindows) AddPassword(service, account, password string) error {
