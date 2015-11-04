@@ -37,7 +37,7 @@ You'll probably have a lot better luck if you do this in a GNOME session.
 ## Dependencies
 
 On each platform, you'll need a Go installation that supports cgo compilation.
-On Windows, this means that you'll need Mingw-w64, because Mingw doesn't support
+On Windows, this means that you'll need MinGW-w64, because MinGW doesn't support
 the Windows Credential Vault API and, even if it did, it doesn't support 64-bit
 compilation.  On other platforms, Go should just use the system compiler for cgo
 compilation.

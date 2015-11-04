@@ -18,7 +18,8 @@ environment:
 # Set up clone path
 clone_folder: C:\projects\src\github.com\havoc-io\go-keytar
 
-# Run build (just here to stop the default Visual Studio build)
+# Run build (primarily just here to stop the default Visual Studio build, since
+# go test will build anyway)
 build_script:
   - set PATH=%GOROOT%\bin;%MINGWROOT%\bin;%PATH%
   - cd %GOPATH%\src\github.com\havoc-io\go-keytar
