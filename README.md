@@ -113,9 +113,12 @@ was created by another program not enforcing this constraint.
 
 ## TODO list
 
+- Create GoDoc entry.
+- Move Linux convenience C code out of the Go source file (it's a bit long), or,
+  even better, switch to a more modern keychain system on Linux, like libsecret.
 - Make APIs try to extract more concise error information from the underlying
   platform APIs.  At the moment, many failures are classified as `ErrUnknown`,
   but we could probably figure out the real error and expand our list of error
   codes.
 - Figure out if Go has a secure fallback that we could use somewhere in its
-  crypto libraries
+  crypto libraries.
