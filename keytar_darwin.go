@@ -12,9 +12,9 @@ import (
 )
 
 // OS X keychain implementation
-type KeychainOSX struct{}
+type keychainOSX struct{}
 
-func (KeychainOSX) AddPassword(service, account, password string) error {
+func (*keychainOSX) AddPassword(service, account, password string) error {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -52,7 +52,7 @@ func (KeychainOSX) AddPassword(service, account, password string) error {
 	return nil
 }
 
-func (KeychainOSX) GetPassword(service, account string) (string, error) {
+func (*keychainOSX) GetPassword(service, account string) (string, error) {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -95,7 +95,7 @@ func (KeychainOSX) GetPassword(service, account string) (string, error) {
 	return result, nil
 }
 
-func (KeychainOSX) DeletePassword(service, account string) error {
+func (*keychainOSX) DeletePassword(service, account string) error {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -142,7 +142,7 @@ func (KeychainOSX) DeletePassword(service, account string) error {
 	return nil
 }
 
-// Keychain factory
-func NewKeychain() (Keychain, error) {
-	return &KeychainOSX{}, nil
+func init() {
+	// Register the OS X keychain implementation
+	keychain = &keychainOSX{}
 }

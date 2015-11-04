@@ -28,7 +28,7 @@ func TestUTF8Validation(t *testing.T) {
 // Test that a non-existent lookup fails
 func TestNonExistentGet(t *testing.T) {
 	// Create a keychain
-	keychain, err := NewKeychain()
+	keychain, err := GetKeychain()
 	if err != nil {
 		t.Fatal("unable to create keychain")
 	}
@@ -45,7 +45,7 @@ func TestNonExistentGet(t *testing.T) {
 
 func TestNonExistentReplace(t *testing.T) {
 	// Create a keychain
-	keychain, err := NewKeychain()
+	keychain, err := GetKeychain()
 	if err != nil {
 		t.Fatal("unable to create keychain")
 	}
@@ -83,7 +83,7 @@ func TestNonExistentReplace(t *testing.T) {
 // Make sure the standard password lifecycle works
 func TestLifecycle(t *testing.T) {
 	// Create a keychain
-	keychain, err := NewKeychain()
+	keychain, err := GetKeychain()
 	if err != nil {
 		t.Fatal("unable to create keychain")
 	}

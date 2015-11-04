@@ -169,9 +169,9 @@ import (
 )
 
 // Linux keychain implementation
-type KeychainLinux struct{}
+type keychainLinux struct{}
 
-func (k KeychainLinux) AddPassword(service, account, password string) error {
+func (*keychainLinux) AddPassword(service, account, password string) error {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -202,7 +202,7 @@ func (k KeychainLinux) AddPassword(service, account, password string) error {
 	return nil
 }
 
-func (k KeychainLinux) GetPassword(service, account string) (string, error) {
+func (*keychainLinux) GetPassword(service, account string) (string, error) {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -230,7 +230,7 @@ func (k KeychainLinux) GetPassword(service, account string) (string, error) {
 	return password, nil
 }
 
-func (k KeychainLinux) DeletePassword(service, account string) error {
+func (*keychainLinux) DeletePassword(service, account string) error {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -253,13 +253,10 @@ func (k KeychainLinux) DeletePassword(service, account string) error {
 	return nil
 }
 
-// Keychain factory
-func NewKeychain() (Keychain, error) {
-	// Make sure keychain services are available
-	if C.gnome_keyring_is_available() == C.FALSE {
-		return nil, ErrUnsupported
+func init() {
+	// Register the Linux keychain implementation if keychain services are
+	// available
+	if C.gnome_keyring_is_available() == C.TRUE {
+		keychain = &keychainLinux{}
 	}
-
-	// Create the keychain
-	return &KeychainLinux{}, nil
 }

@@ -42,8 +42,13 @@ type Keychain interface {
 	DeletePassword(service, account string) error
 }
 
+// Global keychain instance
+var keychain Keychain = nil
+
 // Create a common replace function.  It'd be nice if this common implementation
-// could be baked into the Keychain interface, but such is Go...
+// could be baked into the Keychain interface, but such is Go.  We can't even
+// add this to a common embedded base, because it requires access to the other
+// Keychain interface methods.
 func ReplacePassword(k Keychain, service, account, newPassword string) error {
 	// Delete the password.  We ignore errors, because the password may not
 	// exist.  Unfortunately, not every platform returns enough information via
@@ -54,4 +59,15 @@ func ReplacePassword(k Keychain, service, account, newPassword string) error {
 
 	// Add the new password
 	return k.AddPassword(service, account, newPassword)
+}
+
+// Global keychain accessor
+func GetKeychain() (Keychain, error) {
+	// Check if a global keychain has been registered
+	if keychain != nil {
+		return keychain, nil
+	}
+
+	// If not, it's not supported
+	return nil, ErrUnsupported
 }

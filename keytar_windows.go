@@ -21,9 +21,9 @@ func targetFormat(service, account string) string {
 }
 
 // Windows keychain implementation
-type KeychainWindows struct{}
+type keychainWindows struct{}
 
-func (KeychainWindows) AddPassword(service, account, password string) error {
+func (*keychainWindows) AddPassword(service, account, password string) error {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -70,7 +70,7 @@ func (KeychainWindows) AddPassword(service, account, password string) error {
 	return nil
 }
 
-func (KeychainWindows) GetPassword(service, account string) (string, error) {
+func (*keychainWindows) GetPassword(service, account string) (string, error) {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -109,7 +109,7 @@ func (KeychainWindows) GetPassword(service, account string) (string, error) {
 	return result, nil
 }
 
-func (KeychainWindows) DeletePassword(service, account string) error {
+func (*keychainWindows) DeletePassword(service, account string) error {
 	// Validate input
 	serviceValid := isValidNonNullUTF8(service)
 	accountValid := isValidNonNullUTF8(account)
@@ -138,7 +138,7 @@ func (KeychainWindows) DeletePassword(service, account string) error {
 	return nil
 }
 
-// Keychain factory
-func NewKeychain() (Keychain, error) {
-	return &KeychainWindows{}, nil
+func init() {
+	// Register the OS X keychain implementation
+	keychain = &keychainWindows{}
 }
