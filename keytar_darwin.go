@@ -34,7 +34,7 @@ func (*keychainOSX) AddPassword(service, account, password string) error {
 
 	// Try to add the password
 	status := C.SecKeychainAddGenericPassword(
-		nil,
+		0, // CF References (SecKeychainRef) takes 0 instead of nil
 		C.UInt32(len(service)),
 		serviceCStr,
 		C.UInt32(len(account)),
@@ -71,7 +71,7 @@ func (*keychainOSX) GetPassword(service, account string) (string, error) {
 	var passwordData unsafe.Pointer
 	var passwordDataLength C.UInt32
 	status := C.SecKeychainFindGenericPassword(
-		nil,
+		0, // CF References (CFTypeRef) takes 0 instead of nil
 		C.UInt32(len(service)),
 		serviceCStr,
 		C.UInt32(len(account)),
@@ -113,7 +113,7 @@ func (*keychainOSX) DeletePassword(service, account string) error {
 	// Grab the item
 	var item C.SecKeychainItemRef
 	status := C.SecKeychainFindGenericPassword(
-		nil,
+		0, // CF References (CFTypeRef) takes 0 instead of nil
 		C.UInt32(len(service)),
 		serviceCStr,
 		C.UInt32(len(account)),
