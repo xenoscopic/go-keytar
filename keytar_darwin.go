@@ -11,6 +11,13 @@ import (
 	"unsafe"
 )
 
+const (
+	// nullSecKeychainRef is a NULL SecKeychainRef value.
+	nullSecKeychainRef C.SecKeychainRef = 0
+	// nullCFTypeRef is a NULL CFTypeRef value.
+	nullCFTypeRef C.CFTypeRef = 0
+)
+
 // keychainOSX implements the Keychain interface on OS X by using the Security
 // framework to store items in the user's login keychain.
 type keychainOSX struct{}
@@ -34,7 +41,7 @@ func (*keychainOSX) AddPassword(service, account, password string) error {
 
 	// Try to add the password
 	status := C.SecKeychainAddGenericPassword(
-		0, // CF References (SecKeychainRef) takes 0 instead of nil
+		nullSecKeychainRef,
 		C.UInt32(len(service)),
 		serviceCStr,
 		C.UInt32(len(account)),
@@ -71,7 +78,7 @@ func (*keychainOSX) GetPassword(service, account string) (string, error) {
 	var passwordData unsafe.Pointer
 	var passwordDataLength C.UInt32
 	status := C.SecKeychainFindGenericPassword(
-		0, // CF References (CFTypeRef) takes 0 instead of nil
+		nullCFTypeRef,
 		C.UInt32(len(service)),
 		serviceCStr,
 		C.UInt32(len(account)),
@@ -113,7 +120,7 @@ func (*keychainOSX) DeletePassword(service, account string) error {
 	// Grab the item
 	var item C.SecKeychainItemRef
 	status := C.SecKeychainFindGenericPassword(
-		0, // CF References (CFTypeRef) takes 0 instead of nil
+		nullCFTypeRef,
 		C.UInt32(len(service)),
 		serviceCStr,
 		C.UInt32(len(account)),
