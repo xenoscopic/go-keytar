@@ -23,6 +23,7 @@ clone_folder: C:\projects\src\github.com\havoc-io\go-keytar
 build_script:
   - set PATH=%GOROOT%\bin;%MINGWROOT%\bin;%PATH%
   - cd %GOPATH%\src\github.com\havoc-io\go-keytar
+  - go get -t
   - go build
 
 # Run tests
