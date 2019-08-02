@@ -6,7 +6,7 @@ version: 1.0.0.{build}
 # http://help.appveyor.com/discussions/suggestions/615-support-for-msys2#comment_37571757
 environment:
   GOPATH: C:\projects\go
-  PROJECT_PATH: C:\projects\go-keytar
+  PROJECTPATH: C:\projects\go-keytar
 
   matrix:
   - GOROOT: C:\go-x86
@@ -17,20 +17,20 @@ environment:
     MINGWROOT: C:\msys64\mingw64
 
 # Set up clone path
-clone_folder: C:\projects\src\github.com\havoc-io\go-keytar
+clone_folder: C:\projects\go-keytar
 
 # Run build (primarily just here to stop the default Visual Studio build, since
 # go test will build anyway)
 build_script:
   - set PATH=%GOROOT%\bin;%MINGWROOT%\bin;%PATH%
-  - cd %PROJECT_PATH%
+  - cd %PROJECTPATH%
   - go get -t
   - go build
 
 # Run tests
 test_script:
   - set PATH=%GOROOT%\bin;%MINGWROOT%\bin;%PATH%
-  - cd %PROJECT_PATH%
+  - cd %PROJECTPATH%
   - go test
 
 # Send notifications
