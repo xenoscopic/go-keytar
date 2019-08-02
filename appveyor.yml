@@ -24,7 +24,6 @@ clone_folder: C:\projects\go-keytar
 build_script:
   - set PATH=%GOROOT%\bin;%MINGWROOT%\bin;%PATH%
   - cd %PROJECTPATH%
-  - go get -t
   - go build
 
 # Run tests
