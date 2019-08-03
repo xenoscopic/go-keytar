@@ -30,9 +30,7 @@ func (*keychainWindows) AddPassword(service, account, password string) error {
 
 	cred := wincred.NewGenericCredential(targetFormat(service, account))
 	cred.CredentialBlob = []byte(password)
-	err := cred.Write()
-
-	return err
+	return cred.Write()
 }
 
 func (*keychainWindows) GetPassword(service, account string) (string, error) {
@@ -64,12 +62,11 @@ func (*keychainWindows) DeletePassword(service, account string) error {
 	if err != nil {
 		return err
 	}
-	cred.Delete()
 
-	return nil
+	return cred.Delete()
 }
 
 func init() {
-	// Register the OS X keychain implementation
+	// Register the Windows keychain implementation
 	keychain = &keychainWindows{}
 }

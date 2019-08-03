@@ -122,3 +122,8 @@ was created by another program not enforcing this constraint.
   codes.
 - Figure out if Go has a secure fallback that we could use somewhere in its
   crypto libraries.
+  
+## Contributors
+
+- Jacob Howard (@havoc-io)
+- Jeffrey Hulten (@jhulten)
